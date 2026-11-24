@@ -1,0 +1,1 @@
+"""Google Workspace ACL mirror."""

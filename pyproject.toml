@@ -1,0 +1,112 @@
+[project]
+name = "ceo"
+version = "0.0.0"
+description = "Company Brain multi-tenant SaaS"
+requires-python = ">=3.12"
+dependencies = [
+    "ceo-agent",
+    "ceo-api",
+    "ceo-brain",
+    "ceo-connectors",
+    "ceo-core",
+    "ceo-surfaces",
+    "ceo-workers",
+]
+
+[tool.uv]
+package = false
+default-groups = ["dev"]
+
+[tool.uv.workspace]
+members = [
+    "apps/api",
+    "apps/workers",
+    "packages/agent",
+    "packages/brain",
+    "packages/connectors",
+    "packages/core",
+    "packages/surfaces",
+    "evals",
+]
+
+[tool.uv.sources]
+ceo-agent = { workspace = true }
+ceo-api = { workspace = true }
+ceo-brain = { workspace = true }
+ceo-connectors = { workspace = true }
+ceo-core = { workspace = true }
+ceo-surfaces = { workspace = true }
+ceo-workers = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "import-linter>=2.1",
+    "honcho>=2.0",
+    "pyright>=1.1.400",
+    "pytest>=8.3",
+    "ruff>=0.11",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["apps", "packages", "evals", "scripts", "tests"]
+extend-exclude = ["**/migrations/versions"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ASYNC"]
+
+[tool.ruff.lint.isort]
+known-first-party = [
+    "ceo_agent",
+    "ceo_api",
+    "ceo_brain",
+    "ceo_connectors",
+    "ceo_core",
+    "ceo_surfaces",
+    "ceo_workers",
+    "evals",
+]
+
+[tool.pyright]
+pythonVersion = "3.12"
+typeCheckingMode = "strict"
+include = ["apps", "packages", "evals", "scripts", "tests"]
+exclude = ["**/migrations/**", "**/.venv", "**/node_modules", "**/__pycache__"]
+venvPath = "."
+venv = ".venv"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.importlinter]
+root_packages = [
+    "ceo_agent",
+    "ceo_api",
+    "ceo_brain",
+    "ceo_connectors",
+    "ceo_core",
+    "ceo_surfaces",
+    "ceo_workers",
+]
+
+[[tool.importlinter.contracts]]
+name = "Acyclic package layers"
+type = "layers"
+layers = [
+    "ceo_api | ceo_workers",
+    "ceo_agent",
+    "ceo_brain | ceo_connectors | ceo_surfaces",
+    "ceo_core",
+]
+
+[[tool.importlinter.contracts]]
+name = "Layer 1 packages stay independent"
+type = "independence"
+modules = ["ceo_brain", "ceo_connectors", "ceo_surfaces"]
+
+[[tool.importlinter.contracts]]
+name = "Apps do not import each other"
+type = "independence"
+modules = ["ceo_api", "ceo_workers"]

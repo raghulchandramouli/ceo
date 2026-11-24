@@ -1,0 +1,10 @@
+{
+  "name": "ceo",
+  "private": true,
+  "packageManager": "pnpm@12.23.0",
+  "scripts": {
+    "dev:web": "pnpm --dir apps/web dev",
+    "typecheck:web": "pnpm --dir apps/web typecheck",
+    "codegen": "uv run python scripts/codegen.py"
+  }
+}

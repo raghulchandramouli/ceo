@@ -1,0 +1,29 @@
+---
+description: Non-negotiable multi-tenant isolation, ACL retrieval safety, policy gate, and citation invariants
+alwaysApply: true
+---
+
+# Security, Multi-Tenant & Brain Safety Invariants
+
+## 1. Tenant Isolation (PostgreSQL RLS)
+
+- Every tenant-owned table MUST carry `tenant_id` and have PostgreSQL Row-Level Security (RLS) policies defined in Alembic migrations under `packages/core/src/ceo_core/db/migrations/`.
+- All database access MUST run inside `tenant_session(tenant_id)` executing `SET LOCAL app.tenant_id = :tenant_id`. Never run unscoped queries against tenant tables.
+- Encrypt all third-party OAuth tokens via envelope encryption (`packages/core/src/ceo_core/security/kms.py`) with per-tenant DEKs. Never log or store plaintext tokens.
+- Store generated artifacts under tenant-prefixed S3/R2 keys and expose them only via short-lived signed URLs.
+
+## 2. Permission-Aware Retrieval (Pre-Filter + Channel Intersection)
+
+- **Pre-Filter Only**: Enforce `document_acls` in SQL *before* pgvector/BM25 ranking. Never retrieve unauthorized chunks and ask the LLM to filter them out.
+- **Multiplayer Channel-Intersection Rule**: In shared channels (e.g., Slack `#general`), intersect the asking user's principals with the channel audience (`user ∩ channel`). If confidential context is accessible only to the user and not the channel, redirect to DM or decline in-channel rather than leaking.
+- **0% Leak Hard Gate**: Every change touching retrieval, ACLs, identity resolution, or prompts must pass `evals/suites/acl_leaks/` with zero leaks.
+
+## 3. Policy Gate & Bounded Actions
+
+- Every tool in `packages/connectors` MUST declare a risk tier: `read`, `draft`, `write_internal`, or `write_external`.
+- Write and external actions MUST pass through `packages/agent/src/ceo_agent/policy.py` and wait on a Temporal approval signal (from Slack Block Kit or Web Console) whenever tenant policy requires approval. No tool may bypass the Policy Gate.
+
+## 4. Mandatory Citations & Conflict Honesty
+
+- Factual claims in agent outputs must bind to retrieved `chunk_id` or `memory_id` provenance with clickable source links and timestamps.
+- When sources conflict, surface both sources with dates and offer a human confirmation path ("Save decision to Company Brain") instead of silently guessing.

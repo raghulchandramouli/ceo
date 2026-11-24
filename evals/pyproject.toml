@@ -1,0 +1,14 @@
+[project]
+name = "ceo-evals"
+version = "0.0.0"
+description = "ACL, citation, and action-safety evaluation suites."
+requires-python = ">=3.12"
+dependencies = ["ceo-agent", "ceo-brain", "ceo-core"]
+
+[tool.uv]
+package = false
+
+[tool.uv.sources]
+ceo-agent = { workspace = true }
+ceo-brain = { workspace = true }
+ceo-core = { workspace = true }

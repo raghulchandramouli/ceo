@@ -1,0 +1,13 @@
+---
+description: Next.js App Router conventions for the Web Control Plane in apps/web
+globs: apps/web/**/*.{ts,tsx}
+alwaysApply: false
+---
+
+# Next.js Web Control Plane Conventions
+
+- Use Next.js App Router, TypeScript strict mode, Tailwind CSS, and shadcn/ui primitives (`src/components/ui/`).
+- Group routes cleanly under `src/app/(auth)/`, `src/app/(onboarding)/`, and `src/app/(dashboard)/` (`brain`, `connectors`, `jobs`, `approvals`, `runs`, `policies`, `billing`, `settings`).
+- Consume backend endpoints exclusively via the generated OpenAPI client in `src/lib/api-client/` — do not hand-write untyped `fetch` calls or duplicate backend Pydantic schemas.
+- Default to Server Components for data fetching and keep Client Components small and focused on interactive controls (memory editing, approval actions, policy editors, artifact previews).
+- Never render unverified citations or raw artifact bucket paths; display source links + timestamps and use backend-issued signed URLs for downloads.

@@ -1,0 +1,16 @@
+[project]
+name = "ceo-brain"
+version = "0.0.0"
+description = "Permission-aware retrieval and citations."
+requires-python = ">=3.12"
+dependencies = ["ceo-core"]
+
+[tool.uv.sources]
+ceo-core = { workspace = true }
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ceo_brain"]
