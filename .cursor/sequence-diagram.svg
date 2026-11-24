@@ -1,0 +1,299 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1120" width="1440" height="1120" role="img" aria-label="Company Brain Multi-Tenant SaaS End-to-End Sequential Flow Diagram">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .frame { fill: #ffffff; stroke: #e2e8f0; stroke-width: 1.5; rx: 14; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 21px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 12.5px; font-weight: 400; fill: #475569; }
+      .actor-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 12.5px; font-weight: 700; fill: #0f172a; }
+      .actor-sub { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 10px; font-weight: 500; fill: #475569; }
+      .step-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 11.5px; font-weight: 600; fill: #0f172a; }
+      .step-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 10.5px; font-weight: 500; fill: #334155; }
+      .guard-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 11px; font-weight: 600; fill: #b45309; }
+      .stage-tag { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; fill: #475569; }
+      .badge-num { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 10px; font-weight: 700; fill: #ffffff; }
+      .alt-tag { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 10.5px; font-weight: 700; fill: #9f1239; }
+      .alt-cond { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 10.5px; font-weight: 600; fill: #475569; }
+      .legend-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 11px; font-weight: 600; fill: #334155; }
+
+      .lifeline { stroke: #cbd5e1; stroke-width: 1.4; stroke-dasharray: 5 5; }
+      .stage-band { fill: #f8fafc; stroke: #e2e8f0; stroke-width: 1; rx: 8; }
+      .alt-frame { fill: #fffbfc; stroke: #fda4af; stroke-width: 1.4; stroke-dasharray: 6 4; rx: 8; }
+      .alt-header { fill: #ffe4e6; stroke: #fda4af; stroke-width: 1; rx: 4; }
+
+      .a-slack { fill: #eff6ff; stroke: #3b82f6; stroke-width: 1.5; rx: 8; }
+      .a-api { fill: #f5f3ff; stroke: #8b5cf6; stroke-width: 1.5; rx: 8; }
+      .a-wf { fill: #fffbeb; stroke: #f59e0b; stroke-width: 1.5; rx: 8; }
+      .a-brain { fill: #ecfdf5; stroke: #10b981; stroke-width: 1.5; rx: 8; }
+      .a-agent { fill: #eef2ff; stroke: #6366f1; stroke-width: 1.5; rx: 8; }
+      .a-policy { fill: #fff1f2; stroke: #f43f5e; stroke-width: 1.5; stroke-dasharray: 5 3; rx: 8; }
+      .a-tools { fill: #fdf2f8; stroke: #ec4899; stroke-width: 1.5; rx: 8; }
+
+      .note-pill { fill: #ffffff; stroke: #94a3b8; stroke-width: 1.3; rx: 7; }
+      .acl-box { fill: #ecfdf5; stroke: #10b981; stroke-width: 1.5; rx: 8; }
+      .sleep-pill { fill: #fef3c7; stroke: #f59e0b; stroke-width: 1.3; rx: 14; }
+      .label-bg { fill: #ffffff; fill-opacity: 0.92; }
+
+      .msg { stroke: #334155; stroke-width: 1.8; fill: none; }
+      .msg-ret { stroke: #64748b; stroke-width: 1.6; stroke-dasharray: 5 4; fill: none; }
+      .msg-guard { stroke: #d97706; stroke-width: 1.6; stroke-dasharray: 5 3; fill: none; }
+      .msg-approve { stroke: #e11d48; stroke-width: 1.8; fill: none; }
+      .msg-green { stroke: #059669; stroke-width: 1.8; fill: none; }
+    </style>
+
+    <marker id="arr" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#334155" />
+    </marker>
+    <marker id="arr-ret" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#64748b" />
+    </marker>
+    <marker id="arr-guard" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#d97706" />
+    </marker>
+    <marker id="arr-approve" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#e11d48" />
+    </marker>
+    <marker id="arr-green" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#059669" />
+    </marker>
+  </defs>
+
+  <!-- Canvas -->
+  <rect class="bg" x="0" y="0" width="1440" height="1120" />
+  <rect class="frame" x="18" y="16" width="1404" height="1088" />
+
+  <!-- Header -->
+  <text class="title" x="44" y="50">Company Brain SaaS — End-to-End Sequential Execution Flow</text>
+  <text class="subtitle" x="44" y="71">Step-by-step lifecycle from Slack thread mention → ACL pre-filtered retrieval → ZDR LLM planning → Policy Gate &amp; Temporal Signal → cited reply</text>
+
+  <!-- Legend -->
+  <line x1="1068" y1="44" x2="1102" y2="44" class="msg" marker-end="url(#arr)" />
+  <text class="legend-text" x="1110" y="48">Call / Dispatch</text>
+  <line x1="1208" y1="44" x2="1242" y2="44" class="msg-ret" marker-end="url(#arr-ret)" />
+  <text class="legend-text" x="1250" y="48">Return / Signal</text>
+  <line x1="1068" y1="64" x2="1102" y2="64" class="msg-approve" marker-end="url(#arr-approve)" />
+  <text class="legend-text" x="1110" y="68">Approval Gate (Ph 2)</text>
+  <line x1="1244" y1="64" x2="1278" y2="64" class="msg-guard" marker-end="url(#arr-guard)" />
+  <text class="legend-text" x="1286" y="68">ACL Guard</text>
+
+  <line x1="44" y1="84" x2="1396" y2="84" stroke="#e2e8f0" stroke-width="1" />
+
+  <!-- ==================== TOP ACTORS (centers: 120, 320, 520, 720, 920, 1120, 1320) ==================== -->
+  <rect class="a-slack" x="34" y="96" width="172" height="52" />
+  <text class="actor-title" x="120" y="118" text-anchor="middle">Teammate &amp; Slack</text>
+  <text class="actor-sub" x="120" y="136" text-anchor="middle">packages/surfaces/slack</text>
+
+  <rect class="a-api" x="234" y="96" width="172" height="52" />
+  <text class="actor-title" x="320" y="118" text-anchor="middle">FastAPI + Redis</text>
+  <text class="actor-sub" x="320" y="136" text-anchor="middle">apps/api</text>
+
+  <rect class="a-wf" x="434" y="96" width="172" height="52" />
+  <text class="actor-title" x="520" y="118" text-anchor="middle">Temporal Workflow</text>
+  <text class="actor-sub" x="520" y="136" text-anchor="middle">apps/workers (agent-queue)</text>
+
+  <rect class="a-brain" x="634" y="96" width="172" height="52" />
+  <text class="actor-title" x="720" y="118" text-anchor="middle">Company Brain + RLS</text>
+  <text class="actor-sub" x="720" y="136" text-anchor="middle">packages/brain · core</text>
+
+  <rect class="a-agent" x="834" y="96" width="172" height="52" />
+  <text class="actor-title" x="920" y="118" text-anchor="middle">Agent &amp; ZDR LLM</text>
+  <text class="actor-sub" x="920" y="136" text-anchor="middle">packages/agent</text>
+
+  <rect class="a-policy" x="1034" y="96" width="172" height="52" />
+  <text class="actor-title" x="1120" y="118" text-anchor="middle">Policy Gate (Ph 2)</text>
+  <text class="actor-sub" x="1120" y="136" text-anchor="middle">ceo_agent/policy.py</text>
+
+  <rect class="a-tools" x="1234" y="96" width="172" height="52" />
+  <text class="actor-title" x="1320" y="118" text-anchor="middle">Tools &amp; Sandbox</text>
+  <text class="actor-sub" x="1320" y="136" text-anchor="middle">connectors · sandbox</text>
+
+  <!-- ==================== STAGE BACKDROP BANDS ==================== -->
+  <rect class="stage-band" x="34" y="160" width="1372" height="162" />
+  <text class="stage-tag" x="46" y="176">Stage 1 — Ingress, Verification &amp; Durable Dispatch</text>
+
+  <rect class="stage-band" x="34" y="332" width="1372" height="174" />
+  <text class="stage-tag" x="46" y="348">Stage 2 — Tenant RLS &amp; Permission-Aware Retrieval (user ∩ channel)</text>
+
+  <rect class="stage-band" x="34" y="516" width="1372" height="122" />
+  <text class="stage-tag" x="46" y="532">Stage 3 — Grounded Reasoning, Citations &amp; Policy Classification</text>
+
+  <rect class="alt-frame" x="34" y="648" width="1372" height="232" />
+  <rect class="alt-header" x="34" y="648" width="44" height="22" />
+  <text class="alt-tag" x="56" y="663" text-anchor="middle">ALT</text>
+  <text class="stage-tag" x="88" y="663">Stage 4 — Bounded Tool Execution &amp; Human-in-the-Loop Approval Gate</text>
+
+  <rect class="stage-band" x="34" y="890" width="1372" height="134" />
+  <text class="stage-tag" x="46" y="906">Stage 5 — Audit Trail, Usage Metering &amp; Cited Delivery</text>
+
+  <!-- ==================== VERTICAL LIFELINES ==================== -->
+  <line class="lifeline" x1="120" y1="148" x2="120" y2="1036" />
+  <line class="lifeline" x1="320" y1="148" x2="320" y2="1036" />
+  <line class="lifeline" x1="520" y1="148" x2="520" y2="1036" />
+  <line class="lifeline" x1="720" y1="148" x2="720" y2="1036" />
+  <line class="lifeline" x1="920" y1="148" x2="920" y2="1036" />
+  <line class="lifeline" x1="1120" y1="148" x2="1120" y2="1036" />
+  <line class="lifeline" x1="1320" y1="148" x2="1320" y2="1036" />
+
+  <!-- ==================== STAGE 1: STEPS 1 - 4 ==================== -->
+  <!-- Step 1: Slack -> FastAPI -->
+  <circle cx="52" cy="198" r="9" fill="#3b82f6" />
+  <text class="badge-num" x="52" y="201.5" text-anchor="middle">1</text>
+  <line class="msg" x1="120" y1="198" x2="314" y2="198" marker-end="url(#arr)" />
+  <rect class="label-bg" x="148" y="180" width="144" height="15" />
+  <text class="step-label" x="220" y="191" text-anchor="middle">@mention in thread</text>
+
+  <!-- Step 2: FastAPI self verification & debounce -->
+  <rect class="note-pill" x="190" y="216" width="260" height="28" />
+  <circle cx="204" cy="230" r="9" fill="#8b5cf6" />
+  <text class="badge-num" x="204" y="233.5" text-anchor="middle">2</text>
+  <text class="step-sub" x="328" y="234" text-anchor="middle">Verify HMAC · Fast 200 Ack · Redis Debounce</text>
+
+  <!-- Step 3: FastAPI -> Temporal -->
+  <circle cx="300" cy="268" r="9" fill="#8b5cf6" />
+  <text class="badge-num" x="300" y="271.5" text-anchor="middle">3</text>
+  <line class="msg" x1="320" y1="268" x2="514" y2="268" marker-end="url(#arr)" />
+  <rect class="label-bg" x="342" y="250" width="156" height="15" />
+  <text class="step-label" x="420" y="261" text-anchor="middle">Start AgentRunWorkflow</text>
+
+  <!-- Step 4: Temporal -> Slack live status -->
+  <circle cx="540" cy="304" r="9" fill="#f59e0b" />
+  <text class="badge-num" x="540" y="307.5" text-anchor="middle">4</text>
+  <line class="msg-ret" x1="520" y1="304" x2="126" y2="304" marker-end="url(#arr-ret)" />
+  <rect class="label-bg" x="198" y="286" width="244" height="15" />
+  <text class="step-sub" x="320" y="297" text-anchor="middle">Live status: "Searching Company Brain..."</text>
+
+  <!-- ==================== STAGE 2: STEPS 5 - 7 ==================== -->
+  <!-- Step 5: Temporal -> Brain -->
+  <circle cx="500" cy="370" r="9" fill="#f59e0b" />
+  <text class="badge-num" x="500" y="373.5" text-anchor="middle">5</text>
+  <line class="msg-green" x1="520" y1="370" x2="714" y2="370" marker-end="url(#arr-green)" />
+  <rect class="label-bg" x="536" y="352" width="168" height="15" />
+  <text class="step-label" x="620" y="363" text-anchor="middle">Query via tenant_session()</text>
+
+  <!-- Step 6: Brain ACL Pre-filter & Hybrid Search box -->
+  <rect class="acl-box" x="544" y="388" width="352" height="50" />
+  <circle cx="560" cy="404" r="9" fill="#10b981" />
+  <text class="badge-num" x="560" y="407.5" text-anchor="middle">6</text>
+  <text class="step-label" x="728" y="407" text-anchor="middle">Resolve user_id → asking_user ∩ channel_audience</text>
+  <text class="step-sub" x="720" y="427" text-anchor="middle">SQL pre-filter document_acls BEFORE pgvector + BM25 + RRF</text>
+
+  <!-- Step 7: Brain -> Temporal grounded chunks -->
+  <circle cx="740" cy="462" r="9" fill="#10b981" />
+  <text class="badge-num" x="740" y="465.5" text-anchor="middle">7</text>
+  <line class="msg-ret" x1="720" y1="462" x2="526" y2="462" marker-end="url(#arr-ret)" />
+  <rect class="label-bg" x="534" y="444" width="172" height="15" />
+  <text class="step-sub" x="620" y="455" text-anchor="middle">Chunks + memories + dates</text>
+
+  <!-- Guard fallback: Brain -> Slack DM redirect -->
+  <line class="msg-guard" x1="720" y1="494" x2="126" y2="494" marker-end="url(#arr-guard)" />
+  <rect class="label-bg" x="176" y="476" width="488" height="15" />
+  <text class="guard-label" x="420" y="487" text-anchor="middle">ACL Guard: if private-only docs match in a shared channel → redirect to DM / decline (0% leak)</text>
+
+  <!-- ==================== STAGE 3: STEPS 8 - 10 ==================== -->
+  <!-- Step 8: Temporal -> Agent -->
+  <circle cx="500" cy="554" r="9" fill="#f59e0b" />
+  <text class="badge-num" x="500" y="557.5" text-anchor="middle">8</text>
+  <line class="msg" x1="520" y1="554" x2="914" y2="554" marker-end="url(#arr)" />
+  <rect class="label-bg" x="560" y="536" width="320" height="15" />
+  <text class="step-label" x="720" y="547" text-anchor="middle">Bounded planner (ZDR LLM · citations · conflict check)</text>
+
+  <!-- Step 9: Agent -> Temporal -->
+  <circle cx="940" cy="588" r="9" fill="#6366f1" />
+  <text class="badge-num" x="940" y="591.5" text-anchor="middle">9</text>
+  <line class="msg-ret" x1="920" y1="588" x2="526" y2="588" marker-end="url(#arr-ret)" />
+  <rect class="label-bg" x="615" y="570" width="210" height="15" />
+  <text class="step-sub" x="720" y="581" text-anchor="middle">Tool call plan or cited draft answer</text>
+
+  <!-- Step 10: Temporal -> Policy Gate -->
+  <circle cx="500" cy="622" r="9" fill="#f59e0b" />
+  <text class="badge-num" x="500" y="625.5" text-anchor="middle">10</text>
+  <line class="msg-approve" x1="520" y1="622" x2="1114" y2="622" marker-end="url(#arr-approve)" />
+  <rect class="label-bg" x="620" y="604" width="400" height="15" />
+  <text class="step-label" x="820" y="615" text-anchor="middle">Evaluate risk tier (read | draft | write_internal | write_external)</text>
+
+  <!-- ==================== STAGE 4: ALT BRANCH (STEPS 11 - 13) ==================== -->
+  <!-- Branch A: Auto-allow -->
+  <text class="alt-cond" x="48" y="684">[ Auto-approved: read or permitted draft ]</text>
+  <rect x="1086" y="697" width="28" height="18" rx="9" fill="#10b981" />
+  <text class="badge-num" x="1100" y="709.5" text-anchor="middle">11a</text>
+  <line class="msg-green" x1="1120" y1="706" x2="1314" y2="706" marker-end="url(#arr-green)" />
+  <rect class="label-bg" x="1142" y="688" width="156" height="15" />
+  <text class="step-label" x="1220" y="699" text-anchor="middle">Execute read / sandbox</text>
+
+  <!-- ALT Divider -->
+  <line x1="34" y1="726" x2="1406" y2="726" stroke="#fda4af" stroke-width="1.2" stroke-dasharray="6 4" />
+  <text class="alt-cond" x="48" y="744">[ Requires human approval: write_internal / write_external (Phase 2) ]</text>
+
+  <!-- Step 11b: Policy Gate -> Slack Approval Card -->
+  <rect x="1126" y="759" width="28" height="18" rx="9" fill="#f43f5e" />
+  <text class="badge-num" x="1140" y="771.5" text-anchor="middle">11b</text>
+  <line class="msg-approve" x1="1120" y1="768" x2="126" y2="768" marker-end="url(#arr-approve)" />
+  <rect class="label-bg" x="348" y="750" width="544" height="15" />
+  <text class="step-label" x="620" y="761" text-anchor="middle">Persist approval_requests &amp; post Block Kit Approval Card (diff + Approve / Edit / Reject)</text>
+
+  <!-- Durable sleep pill on Temporal -->
+  <rect class="sleep-pill" x="340" y="784" width="360" height="24" />
+  <text class="step-sub" x="520" y="799.5" text-anchor="middle">Temporal workflow sleeps durably (0 worker RAM) until signal</text>
+
+  <!-- Step 12: User Approve -> FastAPI -> Temporal Signal -->
+  <circle cx="100" cy="832" r="9" fill="#3b82f6" />
+  <text class="badge-num" x="100" y="835.5" text-anchor="middle">12</text>
+  <line class="msg" x1="120" y1="832" x2="314" y2="832" marker-end="url(#arr)" />
+  <rect class="label-bg" x="144" y="814" width="152" height="15" />
+  <text class="step-label" x="220" y="825" text-anchor="middle">Click Approve (Slack/Web)</text>
+
+  <line class="msg-approve" x1="320" y1="832" x2="514" y2="832" marker-end="url(#arr-approve)" />
+  <rect class="label-bg" x="344" y="814" width="152" height="15" />
+  <text class="step-label" x="420" y="825" text-anchor="middle">Temporal approval signal</text>
+
+  <!-- Step 13: Temporal -> Tools -->
+  <circle cx="500" cy="864" r="9" fill="#f59e0b" />
+  <text class="badge-num" x="500" y="867.5" text-anchor="middle">13</text>
+  <line class="msg" x1="520" y1="864" x2="1314" y2="864" marker-end="url(#arr)" />
+  <rect class="label-bg" x="720" y="846" width="400" height="15" />
+  <text class="step-label" x="920" y="857" text-anchor="middle">Execute approved write via ToolRegistry (Native / Managed / MCP)</text>
+
+  <!-- ==================== STAGE 5: STEPS 14 - 16 ==================== -->
+  <!-- Step 14: Tools -> Temporal -->
+  <circle cx="1340" cy="930" r="9" fill="#ec4899" />
+  <text class="badge-num" x="1340" y="933.5" text-anchor="middle">14</text>
+  <line class="msg-ret" x1="1320" y1="930" x2="526" y2="930" marker-end="url(#arr-ret)" />
+  <rect class="label-bg" x="752" y="912" width="336" height="15" />
+  <text class="step-sub" x="920" y="923" text-anchor="middle">Tool result + tenant-prefixed S3/R2 signed artifact URL</text>
+
+  <!-- Step 15: Temporal -> Brain audit & metering -->
+  <circle cx="500" cy="968" r="9" fill="#f59e0b" />
+  <text class="badge-num" x="500" y="971.5" text-anchor="middle">15</text>
+  <line class="msg-green" x1="520" y1="968" x2="714" y2="968" marker-end="url(#arr-green)" />
+  <rect class="label-bg" x="536" y="950" width="168" height="15" />
+  <text class="step-label" x="620" y="961" text-anchor="middle">Save run_steps &amp; usage</text>
+
+  <!-- Step 16: Temporal -> Slack cited reply -->
+  <circle cx="540" cy="1006" r="9" fill="#f59e0b" />
+  <text class="badge-num" x="540" y="1009.5" text-anchor="middle">16</text>
+  <line class="msg" x1="520" y1="1006" x2="126" y2="1006" marker-end="url(#arr)" />
+  <rect class="label-bg" x="150" y="988" width="340" height="15" />
+  <text class="step-label" x="320" y="999" text-anchor="middle">Post cited Block Kit reply (links, dates, "Save to Brain")</text>
+
+  <!-- ==================== BOTTOM ACTOR HEADERS ==================== -->
+  <rect class="a-slack" x="34" y="1036" width="172" height="44" />
+  <text class="actor-title" x="120" y="1062" text-anchor="middle">Teammate &amp; Slack</text>
+
+  <rect class="a-api" x="234" y="1036" width="172" height="44" />
+  <text class="actor-title" x="320" y="1062" text-anchor="middle">FastAPI + Redis</text>
+
+  <rect class="a-wf" x="434" y="1036" width="172" height="44" />
+  <text class="actor-title" x="520" y="1062" text-anchor="middle">Temporal Workflow</text>
+
+  <rect class="a-brain" x="634" y="1036" width="172" height="44" />
+  <text class="actor-title" x="720" y="1062" text-anchor="middle">Company Brain + RLS</text>
+
+  <rect class="a-agent" x="834" y="1036" width="172" height="44" />
+  <text class="actor-title" x="920" y="1062" text-anchor="middle">Agent &amp; ZDR LLM</text>
+
+  <rect class="a-policy" x="1034" y="1036" width="172" height="44" />
+  <text class="actor-title" x="1120" y="1062" text-anchor="middle">Policy Gate (Ph 2)</text>
+
+  <rect class="a-tools" x="1234" y="1036" width="172" height="44" />
+  <text class="actor-title" x="1320" y="1062" text-anchor="middle">Tools &amp; Sandbox</text>
+</svg>

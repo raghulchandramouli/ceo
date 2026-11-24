@@ -1,0 +1,260 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 980" width="1400" height="980" role="img" aria-label="Company Brain Multi-Tenant SaaS System Architecture Diagram">
+  <defs>
+    <style>
+      .bg { fill: #f8fafc; }
+      .frame { fill: #ffffff; stroke: #e2e8f0; stroke-width: 1.5; rx: 14; }
+      .title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 22px; font-weight: 700; fill: #0f172a; }
+      .subtitle { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 13px; font-weight: 400; fill: #475569; }
+      .band-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; fill: #475569; }
+      .box-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 14px; font-weight: 700; fill: #0f172a; }
+      .box-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 11.5px; font-weight: 400; fill: #334155; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; font-weight: 500; fill: #475569; }
+      .pill-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 11.5px; font-weight: 600; fill: #0f172a; }
+      .pill-sub { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 10.5px; font-weight: 400; fill: #475569; }
+      .edge-label { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 10.5px; font-weight: 600; fill: #475569; }
+      .legend-text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 11px; font-weight: 600; fill: #334155; }
+
+      .surface-box { fill: #eff6ff; stroke: #3b82f6; stroke-width: 1.5; rx: 10; }
+      .surface-planned { fill: #f8fafc; stroke: #60a5fa; stroke-width: 1.5; stroke-dasharray: 6 4; rx: 10; }
+
+      .api-band { fill: #f5f3ff; stroke: #8b5cf6; stroke-width: 1.5; rx: 12; }
+      .api-pill { fill: #ffffff; stroke: #c4b5fd; stroke-width: 1.2; rx: 8; }
+
+      .runtime-band { fill: #fffbeb; stroke: #f59e0b; stroke-width: 1.5; rx: 12; }
+      .runtime-box { fill: #ffffff; stroke: #fbbf24; stroke-width: 1.3; rx: 8; }
+      .runtime-planned { fill: #fffdf5; stroke: #f59e0b; stroke-width: 1.3; stroke-dasharray: 6 4; rx: 8; }
+
+      .brain-band { fill: #ecfdf5; stroke: #10b981; stroke-width: 1.5; rx: 12; }
+      .brain-box { fill: #ffffff; stroke: #34d399; stroke-width: 1.3; rx: 8; }
+      .brain-tier { fill: #f0fdf4; stroke: #6ee7b7; stroke-width: 1.1; rx: 6; }
+      .brain-tier-planned { fill: #f8fafc; stroke: #6ee7b7; stroke-width: 1.1; stroke-dasharray: 5 3; rx: 6; }
+
+      .conn-band { fill: #fdf2f8; stroke: #ec4899; stroke-width: 1.5; rx: 12; }
+      .conn-planned { fill: #fdf8fb; stroke: #f472b6; stroke-width: 1.5; stroke-dasharray: 6 4; rx: 12; }
+      .conn-pill { fill: #ffffff; stroke: #f9a8d4; stroke-width: 1.2; rx: 7; }
+      .conn-pill-planned { fill: #ffffff; stroke: #f9a8d4; stroke-width: 1.2; stroke-dasharray: 5 3; rx: 7; }
+
+      .gate-band { fill: #0f172a; stroke: #1e293b; stroke-width: 1.5; rx: 10; }
+      .gate-title { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Inter, sans-serif; font-size: 11.5px; font-weight: 700; fill: #f8fafc; }
+      .gate-sub { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 11px; font-weight: 500; fill: #cbd5e1; }
+
+      .arrow { stroke: #475569; stroke-width: 1.8; fill: none; }
+      .arrow-accent { stroke: #059669; stroke-width: 1.8; fill: none; }
+      .arrow-dashed { stroke: #64748b; stroke-width: 1.6; stroke-dasharray: 5 4; fill: none; }
+    </style>
+
+    <marker id="ah" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#475569" />
+    </marker>
+    <marker id="ah-green" markerWidth="9" markerHeight="7" refX="8" refY="3.5" orient="auto">
+      <polygon points="0 0, 9 3.5, 0 7" fill="#059669" />
+    </marker>
+    <marker id="ah-start" markerWidth="9" markerHeight="7" refX="1" refY="3.5" orient="auto">
+      <polygon points="9 0, 0 3.5, 9 7" fill="#475569" />
+    </marker>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect class="bg" x="0" y="0" width="1400" height="980" />
+  <rect class="frame" x="18" y="16" width="1364" height="948" />
+
+  <!-- Header -->
+  <text class="title" x="48" y="52">Company Brain Multi-Tenant SaaS — System Architecture</text>
+  <text class="subtitle" x="48" y="74">Python (FastAPI · Temporal · PostgreSQL + pgvector · Redis) + Next.js App Router Control Plane</text>
+
+  <!-- Legend -->
+  <rect x="1030" y="34" width="150" height="28" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" />
+  <text class="legend-text" x="1105" y="52" text-anchor="middle">Phase 1 (Active)</text>
+  <rect x="1194" y="34" width="160" height="28" rx="6" fill="#f8fafc" stroke="#64748b" stroke-width="1.5" stroke-dasharray="6 4" />
+  <text class="legend-text" x="1274" y="52" text-anchor="middle">Phase 2–4 (Planned)</text>
+
+  <line x1="48" y1="88" x2="1352" y2="88" stroke="#e2e8f0" stroke-width="1" />
+
+  <!-- ==================== BAND 1: USER SURFACES ==================== -->
+  <text class="band-title" x="48" y="110">1. User Surfaces</text>
+
+  <!-- Slack App -->
+  <rect class="surface-box" x="48" y="120" width="410" height="82" />
+  <text class="box-title" x="66" y="144">Slack App (Multiplayer Surface)</text>
+  <text class="box-sub" x="66" y="164">Events API · Group Threads · Block Kit · Live Status</text>
+  <text class="mono" x="66" y="186">packages/surfaces/slack</text>
+
+  <!-- Next.js Web Control Plane -->
+  <rect class="surface-box" x="495" y="120" width="410" height="82" />
+  <text class="box-title" x="513" y="144">Next.js Web Control Plane</text>
+  <text class="box-sub" x="513" y="164">Auth · Onboarding · Connectors · Brain · Approvals · Jobs</text>
+  <text class="mono" x="513" y="186">apps/web (typed via apps/web/src/lib/api-client)</text>
+
+  <!-- WhatsApp -->
+  <rect class="surface-planned" x="942" y="120" width="410" height="82" />
+  <text class="box-title" x="960" y="144">WhatsApp Business Cloud API (Phase 4)</text>
+  <text class="box-sub" x="960" y="164">Group &amp; Direct Threads · Identity Linking · Approvals</text>
+  <text class="mono" x="960" y="186">packages/surfaces/whatsapp</text>
+
+  <!-- Arrows: Surfaces <-> FastAPI -->
+  <line class="arrow" x1="253" y1="202" x2="253" y2="246" marker-end="url(#ah)" marker-start="url(#ah-start)" />
+  <text class="edge-label" x="263" y="229">Events / Block Kit</text>
+  <line class="arrow" x1="700" y1="202" x2="700" y2="246" marker-end="url(#ah)" marker-start="url(#ah-start)" />
+  <text class="edge-label" x="710" y="229">OpenAPI REST</text>
+  <line class="arrow-dashed" x1="1147" y1="202" x2="1147" y2="246" marker-end="url(#ah)" />
+  <text class="edge-label" x="1157" y="229">Webhooks</text>
+
+  <!-- ==================== BAND 2: FASTAPI GATEWAY ==================== -->
+  <rect class="api-band" x="48" y="248" width="1304" height="96" />
+  <text class="band-title" x="66" y="270">2. API Gateway &amp; Webhook Edge — FastAPI (apps/api)</text>
+
+  <rect class="api-pill" x="66" y="280" width="298" height="50" />
+  <text class="pill-text" x="80" y="300">JWT Auth, RBAC &amp; Tenant Context</text>
+  <text class="pill-sub" x="80" y="318">deps.py · middleware/tenant_context.py</text>
+
+  <rect class="api-pill" x="382" y="280" width="312" height="50" />
+  <text class="pill-text" x="396" y="300">Webhook Ingress (Verify + Fast Ack)</text>
+  <text class="pill-sub" x="396" y="318">webhooks/{slack,whatsapp,connectors,stripe}</text>
+
+  <rect class="api-pill" x="712" y="280" width="308" height="50" />
+  <text class="pill-text" x="726" y="300">Control Plane REST Routers</text>
+  <text class="pill-sub" x="726" y="318">tenants · users · connectors · brain · jobs · runs</text>
+
+  <rect class="api-pill" x="1038" y="280" width="296" height="50" />
+  <text class="pill-text" x="1052" y="300">Rate Limit, Debounce &amp; Signals</text>
+  <text class="pill-sub" x="1052" y="318">Redis sliding window · Temporal Signals</text>
+
+  <!-- Arrows: FastAPI -> Workers & Brain -->
+  <line class="arrow" x1="365" y1="344" x2="365" y2="388" marker-end="url(#ah)" />
+  <text class="edge-label" x="375" y="371">Dispatch Workflows &amp; Approval Signals</text>
+  <line class="arrow" x1="1035" y1="344" x2="1035" y2="388" marker-end="url(#ah)" />
+  <text class="edge-label" x="1045" y="371">tenant_session(tenant_id) + Redis</text>
+
+  <!-- ==================== BAND 3 LEFT: DURABLE RUNTIME ==================== -->
+  <rect class="runtime-band" x="48" y="390" width="632" height="328" />
+  <text class="band-title" x="66" y="412">3A. Durable Execution &amp; Agent Runtime (apps/workers · Temporal)</text>
+
+  <!-- Task Queues Row -->
+  <rect class="runtime-box" x="66" y="424" width="188" height="52" />
+  <text class="pill-text" x="80" y="445">agent-queue</text>
+  <text class="pill-sub" x="80" y="463">Interactive Slack threads</text>
+
+  <rect class="runtime-box" x="270" y="424" width="188" height="52" />
+  <text class="pill-text" x="284" y="445">sync-queue</text>
+  <text class="pill-sub" x="284" y="463">Backfills &amp; ACL mirrors</text>
+
+  <rect class="runtime-planned" x="474" y="424" width="188" height="52" />
+  <text class="pill-text" x="488" y="445">jobs-queue (Ph 3)</text>
+  <text class="pill-sub" x="488" y="463">Standing Responsibilities</text>
+
+  <!-- Agent Runtime + Policy Gate Row -->
+  <rect class="runtime-box" x="66" y="492" width="290" height="106" />
+  <text class="box-title" x="80" y="516">Agent Runtime (packages/agent)</text>
+  <text class="box-sub" x="80" y="536">• Bounded planner &amp; step budgets</text>
+  <text class="box-sub" x="80" y="555">• ZDR LLM Router (ceo_agent.llm)</text>
+  <text class="box-sub" x="80" y="574">• Mandatory citation &amp; conflict honesty</text>
+  <text class="mono" x="80" y="591">runtime.py · prompts/</text>
+
+  <rect class="runtime-planned" x="372" y="492" width="290" height="106" />
+  <text class="box-title" x="386" y="516">Policy &amp; Approval Gate (Ph 2)</text>
+  <text class="box-sub" x="386" y="536">• Risk tiers: read · draft · write_int · ext</text>
+  <text class="box-sub" x="386" y="555">• Suspends workflow on Temporal Signal</text>
+  <text class="box-sub" x="386" y="574">• Slack Block Kit / Web Approve &amp; Audit</text>
+  <text class="mono" x="386" y="591">policy.py · approval_requests</text>
+
+  <!-- Sandbox + Metering Row -->
+  <rect class="runtime-planned" x="66" y="614" width="388" height="86" />
+  <text class="box-title" x="80" y="638">Isolated Sandbox (packages/sandbox · Ph 3)</text>
+  <text class="box-sub" x="80" y="658">E2B / Modal ephemeral execution → PDF, XLSX, Charts, HTML</text>
+  <text class="box-sub" x="80" y="676">Uploads to tenant-prefixed S3/R2 → short-lived signed URLs</text>
+
+  <rect class="runtime-planned" x="468" y="614" width="194" height="86" />
+  <text class="box-title" x="482" y="638">Metering (Ph 3)</text>
+  <text class="box-sub" x="482" y="658">Tokens &amp; sandbox sec</text>
+  <text class="box-sub" x="482" y="676">Spend caps → Stripe</text>
+
+  <!-- Cross-column Arrow: Runtime <-> Company Brain -->
+  <line class="arrow-accent" x1="680" y1="530" x2="718" y2="530" marker-end="url(#ah-green)" marker-start="url(#ah-start)" />
+  <line class="arrow-accent" x1="680" y1="620" x2="718" y2="620" marker-end="url(#ah-green)" />
+
+  <!-- ==================== BAND 3 RIGHT: COMPANY BRAIN ==================== -->
+  <rect class="brain-band" x="720" y="390" width="632" height="328" />
+  <text class="band-title" x="738" y="412">3B. Company Brain &amp; Core Data Layer (packages/brain · packages/core)</text>
+
+  <!-- Permission-Aware Retrieval Box -->
+  <rect class="brain-box" x="738" y="424" width="596" height="90" />
+  <text class="box-title" x="752" y="446">Permission-Aware Hybrid Retrieval &amp; Guardrails</text>
+  <text class="box-sub" x="752" y="466">1. Identity Resolver (Slack/Google/Notion IDs → canonical user_id + groups)</text>
+  <text class="box-sub" x="752" y="484">2. Multiplayer Channel Guard: asking_user ∩ channel_audience (DM redirect on private)</text>
+  <text class="box-sub" x="752" y="502">3. SQL Pre-Filter document_acls BEFORE pgvector + BM25 + RRF + Freshness + Rerank</text>
+
+  <!-- Postgres 4-Tier Brain -->
+  <rect class="brain-box" x="738" y="526" width="596" height="114" />
+  <text class="box-title" x="752" y="547">PostgreSQL 16 + pgvector + RLS (SET LOCAL app.tenant_id)</text>
+
+  <rect class="brain-tier" x="752" y="556" width="278" height="34" />
+  <text class="pill-text" x="762" y="571">T1: Knowledge Index</text>
+  <text class="pill-sub" x="762" y="584">documents · document_chunks · document_acls</text>
+
+  <rect class="brain-tier-planned" x="1042" y="556" width="278" height="34" />
+  <text class="pill-text" x="1052" y="571">T2: Entity Graph (Ph 4)</text>
+  <text class="pill-sub" x="1052" y="584">entities · entity_edges (owns, decided_in)</text>
+
+  <rect class="brain-tier-planned" x="752" y="598" width="278" height="34" />
+  <text class="pill-text" x="762" y="613">T3: Living Memory (Ph 2)</text>
+  <text class="pill-sub" x="762" y="626">memories (teach, pin, expire) · conflict check</text>
+
+  <rect class="brain-tier" x="1042" y="598" width="278" height="34" />
+  <text class="pill-text" x="1052" y="613">T4: Episodic &amp; Audit</text>
+  <text class="pill-sub" x="1052" y="626">agent_runs · run_steps · standing_jobs · usage</text>
+
+  <!-- Redis + KMS/S3 Row -->
+  <rect class="brain-box" x="738" y="652" width="286" height="48" />
+  <text class="pill-text" x="752" y="672">Redis</text>
+  <text class="pill-sub" x="752" y="689">Webhook debounce · Rate limits · Streams</text>
+
+  <rect class="brain-box" x="1038" y="652" width="296" height="48" />
+  <text class="pill-text" x="1052" y="672">KMS Envelope Encryption + S3 / R2</text>
+  <text class="pill-sub" x="1052" y="689">Per-tenant DEKs (OAuth) · Signed artifact URLs</text>
+
+  <!-- Arrows: Runtime & Brain <-> Connectors -->
+  <line class="arrow" x1="310" y1="718" x2="310" y2="762" marker-end="url(#ah)" marker-start="url(#ah-start)" />
+  <text class="edge-label" x="320" y="745">Approved Tools / Sync &amp; ACLs</text>
+  <line class="arrow-dashed" x1="1045" y1="718" x2="1045" y2="762" marker-end="url(#ah)" marker-start="url(#ah-start)" />
+  <text class="edge-label" x="1055" y="745">Long-Tail Actions &amp; MCP</text>
+
+  <!-- ==================== BAND 4: HYBRID CONNECTORS ==================== -->
+  <rect class="conn-band" x="48" y="764" width="712" height="104" />
+  <text class="band-title" x="66" y="786">4A. Tier 1: Native First-Party Connectors (packages/connectors/native)</text>
+
+  <rect class="conn-pill" x="66" y="798" width="124" height="54" />
+  <text class="pill-text" x="128" y="820" text-anchor="middle">Slack</text>
+  <text class="pill-sub" x="128" y="838" text-anchor="middle">History + ACLs</text>
+
+  <rect class="conn-pill" x="202" y="798" width="154" height="54" />
+  <text class="pill-text" x="279" y="820" text-anchor="middle">Google Workspace</text>
+  <text class="pill-sub" x="279" y="838" text-anchor="middle">Drive · Gmail · Cal</text>
+
+  <rect class="conn-pill" x="368" y="798" width="124" height="54" />
+  <text class="pill-text" x="430" y="820" text-anchor="middle">Notion</text>
+  <text class="pill-sub" x="430" y="838" text-anchor="middle">Pages + ACLs</text>
+
+  <rect class="conn-pill-planned" x="504" y="798" width="114" height="54" />
+  <text class="pill-text" x="561" y="820" text-anchor="middle">Linear (Ph 4)</text>
+  <text class="pill-sub" x="561" y="838" text-anchor="middle">Issues + Sync</text>
+
+  <rect class="conn-pill-planned" x="630" y="798" width="114" height="54" />
+  <text class="pill-text" x="687" y="820" text-anchor="middle">HubSpot (Ph 4)</text>
+  <text class="pill-sub" x="687" y="838" text-anchor="middle">CRM + Notes</text>
+
+  <rect class="conn-planned" x="782" y="764" width="570" height="104" />
+  <text class="band-title" x="800" y="786">4B. Tier 2: Managed Gateway &amp; MCP (packages/connectors/managed)</text>
+
+  <rect class="conn-pill-planned" x="800" y="798" width="264" height="54" />
+  <text class="pill-text" x="932" y="820" text-anchor="middle">Composio / Nango / Pipedream</text>
+  <text class="pill-sub" x="932" y="838" text-anchor="middle">Long-tail OAuth &amp; SaaS actions</text>
+
+  <rect class="conn-pill-planned" x="1078" y="798" width="256" height="54" />
+  <text class="pill-text" x="1206" y="820" text-anchor="middle">Tenant Remote MCP Servers</text>
+  <text class="pill-sub" x="1206" y="838" text-anchor="middle">Unified ToolRegistry + Policy Gate</text>
+
+  <!-- ==================== BAND 5: HARD GATES & DEPENDENCY INVARIANT ==================== -->
+  <rect class="gate-band" x="48" y="886" width="1304" height="60" />
+  <text class="gate-title" x="68" y="909">CI Hard Gates (evals/):   ACL Leaks = 0% (Hard Gate)   ·   Citation Groundedness   ·   Action Safety (Zero Policy Bypass)</text>
+  <text class="gate-sub" x="68" y="932">Strict Acyclic Graph:  apps/{api,workers}  →  packages/agent  →  packages/{brain,connectors,sandbox,surfaces}  →  packages/core</text>
+</svg>

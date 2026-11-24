@@ -1,6 +1,7 @@
 # Company Brain Multi-Tenant SaaS — Master Design & Build Plan
 
 > **Companion Reference Docs**:
+> - Architecture diagrams: `.cursor/architecture-diagram.svg`, `.cursor/sequence-diagram.svg`, `.cursor/plans/architecture-diagrams.md`
 > - Monorepo structure: `.cursor/plans/repo-structure.md`
 > - Build & launch sign-off checklist: `.cursor/plans/sign-off-checklist.md`
 > - Workspace invariants: `.cursor/rules/security-acl-invariants.mdc`, `.cursor/rules/repo-architecture.mdc`

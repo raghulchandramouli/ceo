@@ -1,0 +1,14 @@
+feature: home
+entry: home link "Log in"
+url: http://127.0.0.1:3000/login
+title: Log in · Company Brain
+
+- role: document
+  name: Log in · Company Brain
+  children:
+    - role: link
+      name: Back home
+    - role: heading
+      name: Log in
+      level: 1
+      name: Workspace sign-in and the provider callback land on this route.

@@ -1,0 +1,22 @@
+feature: home
+entry: Back home from /login
+url: http://127.0.0.1:3000/
+title: Company Brain
+
+- role: document
+  name: Company Brain
+  children:
+    - role: link
+      name: Company Brain
+    - role: link
+      name: Brain
+    - role: link
+      name: Connectors
+    - role: link
+      name: Log in
+    - role: link
+      name: Set up a workspace
+    - role: heading
+      name: Control plane
+      level: 1
+      name: Sign in, connect Slack, Drive, and Notion, and search the company brain with the same permissions as the person asking.
