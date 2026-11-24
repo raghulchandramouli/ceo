@@ -12,11 +12,11 @@ Check off each item (`- [x]`) only after code is merged and verified. Complete t
 
 ## Cross-Cutting Invariants (Continuous Gate Across All Phases)
 
-- [ ] Acyclic package dependency graph enforced (`apps/{api,workers} -> packages/agent -> packages/{brain,connectors,sandbox,surfaces} -> packages/core`; `packages/` never imports `apps/`)
+- [x] Acyclic package dependency graph enforced (`apps/{api,workers} -> packages/agent -> packages/{brain,connectors,sandbox,surfaces} -> packages/core`; `packages/` never imports `apps/`)
 - [ ] Every tenant-owned PostgreSQL table carries `tenant_id` with Row-Level Security (RLS) policies in Alembic migrations
 - [ ] All DB queries execute inside `tenant_session(tenant_id)` (`SET LOCAL app.tenant_id = :tenant_id`)
 - [ ] All third-party OAuth tokens encrypted via KMS envelope encryption (`ceo_core.security.kms`) with per-tenant DEKs; zero plaintext token logs
-- [ ] All LLM traffic routed exclusively through ZDR enterprise client (`ceo_agent.llm.client`)
+- [ ] All LLM traffic routed exclusively through ZDR-configured LangChain `BaseChatModel` instances from `ceo_agent.llm.client` (with external LangSmith tracing disabled and `ceo_agent.callbacks` metering attached)
 - [ ] FastAPI OpenAPI schema and generated TypeScript client (`apps/web/src/lib/api-client/`) pass CI drift check (`just codegen`)
 - [ ] `evals/suites/acl_leaks/` passes CI with **0% leaks** (hard merge gate)
 
@@ -60,9 +60,10 @@ Check off each item (`- [x]`) only after code is merged and verified. Complete t
 - [ ] Native Google Workspace connector (Drive incremental sync + file/folder ACL mirror + OAuth v2)
 - [ ] Native Notion connector (page/database incremental sync + workspace/page ACL mirror + OAuth)
 
-### API, Workers & Web Onboarding (`apps/api`, `apps/workers`, `apps/web`)
+### API, Workers, LangChain Runtime & Web Onboarding (`apps/api`, `apps/workers`, `packages/agent`, `apps/web`)
 - [ ] FastAPI gateway with JWT auth (WorkOS/Clerk), RBAC guards, tenant context middleware, and rate limiting
-- [ ] Temporal workers split cleanly across `agent-queue` and `sync-queue` with strictly deterministic workflows and I/O isolated in activities
+- [ ] Temporal workers split cleanly across `agent-queue` and `sync-queue` with strictly deterministic workflows and all DB/HTTP/LangChain/LLM I/O isolated in activities
+- [ ] LangChain agent runtime (`packages/agent`) implemented inside Temporal activities: ZDR `BaseChatModel` factory (`llm/client.py`), ACL-scoped `BaseRetriever` (`retriever.py`), `with_structured_output()` citation schemas (`runtime.py`), and `AsyncCallbackHandler` metering/tracing (`callbacks.py`)
 - [ ] Next.js Web Control Plane `(auth)`, `(onboarding)`, `/connectors` (OAuth install + sync status), and `/brain` (ACL-aware search tester)
 
 ### Phase 1 Exit Verification
@@ -84,8 +85,8 @@ Check off each item (`- [x]`) only after code is merged and verified. Complete t
 - [ ] Web Console `/brain` Living Memory viewer/editor (create, edit, pin, approve, archive)
 
 ### Policy Gate & Human-in-the-Loop Approvals (`packages/agent`, `apps/workers`)
-- [ ] Every connector tool declares a risk tier (`read`, `draft`, `write_internal`, `write_external`) in `ToolRegistry`
-- [ ] Risk Policy Engine (`packages/agent/src/ceo_agent/policy.py`) evaluates tool tier against `workspace_policies` (`auto` | `approve` | `deny`)
+- [ ] Every connector tool declares a risk tier (`read`, `draft`, `write_internal`, `write_external`) in `ToolRegistry` and is exposed to LangChain via `packages/agent/src/ceo_agent/tools.py` (`StructuredTool`) without permitting unapproved write execution
+- [ ] Risk Policy Engine (`packages/agent/src/ceo_agent/policy.py`) evaluates proposed LangChain tool calls against `workspace_policies` (`auto` | `approve` | `deny`)
 - [ ] `AgentRunWorkflow` persists `approval_requests`, posts Slack Block Kit Approval Cards (showing proposed action diff + Approve/Edit/Reject), and waits durably on Temporal Signals with expiry/timeout
 - [ ] Web Console `/approvals` queue and `/policies` rule builder connected via OpenAPI client
 

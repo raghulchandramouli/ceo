@@ -76,7 +76,7 @@ ceo/
 │           │   └── maintenance.py       # Async entity extraction, memory decay/conflicts, Stripe usage rollup
 │           └── activities/
 │               ├── retrieval.py         # Calls packages/brain with user ∩ channel ACL guard
-│               ├── agent.py             # Runs bounded LLM planner/tool loop
+│               ├── agent.py             # Runs bounded LangChain planner/LCEL activity (ZDR models + citations)
 │               ├── policy_gate.py       # Evaluates risk policy, persists approval_requests, posts card
 │               ├── tool_exec.py         # Executes approved reads/writes via packages/connectors
 │               ├── sandbox.py           # Generates PDF/XLSX/charts via packages/sandbox -> S3/R2
@@ -171,15 +171,18 @@ ceo/
 │   │       │   └── modal.py
 │   │       └── templates/               # Artifact generators (WeasyPrint PDF, openpyxl XLSX, charts, HTML reports)
 │   │
-│   └── agent/                           # Layer 2: Agent Runtime, Risk Policy Engine & Prompts
-│       ├── pyproject.toml
+│   └── agent/                           # Layer 2: LangChain Agent Runtime, Risk Policy Engine & Prompts
+│       ├── pyproject.toml               # Depends on langchain-core, langchain-anthropic, langchain-openai
 │       └── src/ceo_agent/
-│           ├── runtime.py               # Bounded planner/executor loop, step budgets, structured citation output
+│           ├── runtime.py               # Bounded LangChain (LCEL) planner/executor, step budgets, with_structured_output() citations
 │           ├── policy.py                # Risk Policy Engine (tool risk tier + tenant policy -> auto | approve | deny)
+│           ├── tools.py                 # LangChain StructuredTool adapters over ToolRegistry (risk-tier metadata; no unapproved writes)
+│           ├── retriever.py             # LangChain BaseRetriever wrapping SQL pre-filtered ceo_brain hybrid retrieval
+│           ├── callbacks.py             # LangChain AsyncCallbackHandler -> usage_events, run_steps, OTEL (LangSmith disabled)
 │           ├── llm/
-│           │   ├── client.py            # ZDR enterprise LLM adapters (Anthropic / OpenAI) + token accounting
-│           │   └── router.py            # Model routing (fast extraction vs. deep reasoning)
-│           └── prompts/                 # Versioned Jinja/Markdown prompt templates (agent, standing jobs, conflicts)
+│           │   ├── client.py            # ZDR enterprise LangChain BaseChatModel factory (ChatAnthropic / ChatOpenAI) + token accounting
+│           │   └── router.py            # Model routing across LangChain chat models (fast extraction vs. deep reasoning)
+│           └── prompts/                 # Versioned LangChain ChatPromptTemplate & Jinja/Markdown templates (agent, standing jobs, conflicts)
 │
 ├── evals/                               # Automated Quality & Security Evaluation Suite (CI-gated)
 │   ├── pyproject.toml

@@ -8,7 +8,7 @@ alwaysApply: false
 
 - Use Python 3.12+ with strict typing (`pyright`) and `ruff` for linting/formatting.
 - Use async I/O end-to-end (SQLAlchemy async sessions, `httpx.AsyncClient`, async Redis/Temporal clients).
-- **Temporal Determinism**: Keep workflow code in `apps/workers/src/ceo_workers/workflows/` strictly deterministic — perform all DB queries, HTTP calls, LLM calls, and sandbox runs inside `activities/`.
+- **Temporal Determinism**: Keep workflow code in `apps/workers/src/ceo_workers/workflows/` strictly deterministic — perform all DB queries, HTTP calls, **LangChain** chains/retrievers, LLM calls, and sandbox runs inside `activities/`.
 - **Database Access**: Always acquire sessions via `ceo_core.db.session.tenant_session(tenant_id)` so PostgreSQL RLS is active on every query.
-- **Metering**: Emit `usage_events` via `ceo_core.metering.tracker` for every LLM call, sandbox execution, and metered connector invocation, and check tenant budget caps before starting runs.
-- **Zero-Data-Retention LLMs**: Route all model calls through `ceo_agent.llm.client` configured for enterprise ZDR endpoints; never instantiate raw provider SDK clients directly inside routes or activities.
+- **Metering**: Emit `usage_events` via `ceo_core.metering.tracker` (wired via `ceo_agent.callbacks` for LangChain LLM calls) for every LLM call, sandbox execution, and metered connector invocation, and check tenant budget caps before starting runs.
+- **Zero-Data-Retention LLMs & LangChain**: Acquire all LangChain `BaseChatModel` instances (`ChatAnthropic`, `ChatOpenAI`) exclusively via `ceo_agent.llm.client` configured for enterprise ZDR endpoints with external LangSmith tracing disabled (`LANGCHAIN_TRACING_V2=false`); never instantiate raw provider SDKs or bare LangChain chat models directly inside routes or activities. Keep LangChain write/external tools proposal-only so Temporal workflows route them through `ceo_agent.policy` and approval signals.

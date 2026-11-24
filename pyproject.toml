@@ -97,7 +97,7 @@ type = "layers"
 layers = [
     "ceo_api | ceo_workers",
     "ceo_agent",
-    "ceo_brain | ceo_connectors | ceo_surfaces",
+    "ceo_brain | ceo_connectors | ceo_surfaces | (ceo_sandbox)",
     "ceo_core",
 ]
 

@@ -60,7 +60,7 @@
 
   <!-- Header -->
   <text class="title" x="48" y="52">Company Brain Multi-Tenant SaaS — System Architecture</text>
-  <text class="subtitle" x="48" y="74">Python (FastAPI · Temporal · PostgreSQL + pgvector · Redis) + Next.js App Router Control Plane</text>
+  <text class="subtitle" x="48" y="74">Python (FastAPI · Temporal · LangChain · PostgreSQL + pgvector · Redis) + Next.js App Router Control Plane</text>
 
   <!-- Legend -->
   <rect x="1030" y="34" width="150" height="28" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5" />
@@ -144,11 +144,11 @@
 
   <!-- Agent Runtime + Policy Gate Row -->
   <rect class="runtime-box" x="66" y="492" width="290" height="106" />
-  <text class="box-title" x="80" y="516">Agent Runtime (packages/agent)</text>
-  <text class="box-sub" x="80" y="536">• Bounded planner &amp; step budgets</text>
-  <text class="box-sub" x="80" y="555">• ZDR LLM Router (ceo_agent.llm)</text>
-  <text class="box-sub" x="80" y="574">• Mandatory citation &amp; conflict honesty</text>
-  <text class="mono" x="80" y="591">runtime.py · prompts/</text>
+  <text class="box-title" x="80" y="516">Agent Runtime (LangChain)</text>
+  <text class="box-sub" x="80" y="536">• Bounded LCEL planner &amp; step budgets</text>
+  <text class="box-sub" x="80" y="555">• ZDR BaseChatModel (ceo_agent.llm)</text>
+  <text class="box-sub" x="80" y="574">• Structured citations &amp; conflict honesty</text>
+  <text class="mono" x="80" y="591">runtime.py · tools.py · retriever.py</text>
 
   <rect class="runtime-planned" x="372" y="492" width="290" height="106" />
   <text class="box-title" x="386" y="516">Policy &amp; Approval Gate (Ph 2)</text>

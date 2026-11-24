@@ -25,11 +25,11 @@ flowchart TB
     FastAPI["FastAPI Gateway (JWT, RBAC, Webhooks, Rate Limit, OpenAPI)"]
   end
 
-  subgraph runtime [Durable Execution - apps/workers and Temporal]
+  subgraph runtime [Durable Execution - apps/workers, Temporal, and LangChain]
     AgentQ["agent-queue (Interactive Threads)"]
     SyncQ["sync-queue (Ingestion and ACLs)"]
     JobsQ["jobs-queue (Standing Jobs - Phase 3)"]
-    AgentRuntime["Agent Runtime (packages/agent: Planner, ZDR LLM, Citations)"]
+    AgentRuntime["Agent Runtime (packages/agent: LangChain LCEL, ZDR Models, Citations)"]
     PolicyGate["Policy and Approval Gate (Phase 2: Temporal Signals)"]
     Sandbox["Isolated Sandbox (packages/sandbox - Phase 3: E2B/Modal)"]
   end
@@ -91,7 +91,7 @@ flowchart LR
   end
 
   subgraph layer2 [Layer 2]
-    Agent["packages/agent"]
+    Agent["packages/agent (LangChain)"]
   end
 
   subgraph layer1 [Layer 1]
@@ -163,7 +163,7 @@ flowchart TD
   Hybrid --> PrivateHit{"Only Private User Docs Match in Shared Channel?"}
 
   PrivateHit -->|"Yes"| DMRedirect["Decline In-Channel or Redirect Privately via DM"]
-  PrivateHit -->|"No"| Synthesize["Generate Cited Answer (claim -> chunk_id / memory_id)"]
+  PrivateHit -->|"No"| Synthesize["LangChain Structured Output (claim -> chunk_id / memory_id)"]
   Synthesize --> Conflict{"Do Sources Conflict?"}
   Conflict -->|"Yes"| SurfaceConflict["Show Both Sources + Dates + Save Decision to Brain CTA"]
   Conflict -->|"No"| Reply["Post Cited Block Kit Reply in Slack Thread"]
@@ -179,6 +179,7 @@ sequenceDiagram
   participant API as FastAPI (apps/api)
   participant WF as Temporal AgentRunWorkflow
   participant Brain as Company Brain
+  participant LC as LangChain Runtime Activity
   participant Policy as Policy Gate
   participant Tool as External Tool API
 
@@ -186,6 +187,8 @@ sequenceDiagram
   API->>WF: Start or signal workflow (agent-queue)
   WF->>Brain: Pre-filtered ACL hybrid retrieval + living memory
   Brain-->>WF: Grounded chunks + source links + timestamps
+  WF->>LC: Invoke LangChain planner (ZDR BaseChatModel + LCEL + StructuredTool schemas)
+  LC-->>WF: Proposed tool call(s) or structured cited answer
   WF->>Policy: Evaluate proposed tool call risk tier
   alt Risk tier is read or auto-approved draft
     Policy-->>WF: Allow

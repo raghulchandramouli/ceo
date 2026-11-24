@@ -12,7 +12,7 @@ A governed, permission-aware B2B operating layer ("Company Brain + multiplayer A
 
 1. **Company Brain**: Multi-tier organizational context (synced docs, entity relationships, teachable living memory, and episodic run history) strictly filtered by user and channel permissions.
 2. **Multiplayer Chat Surface**: Slack first (primary B2B surface), WhatsApp second — operating in group threads with canonical identity resolution and live status updates.
-3. **Bounded Agent Runtime & Standing Jobs**: Durable Temporal-backed tool-calling agents with human-in-the-loop approval gates, sandboxed artifact generation (PDFs, XLSX, charts, HTML reports), and scheduled recurring responsibilities that remember prior runs.
+3. **Bounded Agent Runtime & Standing Jobs**: Durable Temporal-backed, **LangChain**-orchestrated tool-calling agents with human-in-the-loop approval gates, sandboxed artifact generation (PDFs, XLSX, charts, HTML reports), and scheduled recurring responsibilities that remember prior runs.
 4. **Web Control Plane**: Multi-tenant Next.js dashboard for connector OAuth, memory inspection/editing, Standing Jobs studio, approval queue, audit logs, and usage-based billing.
 
 ```mermaid
@@ -27,9 +27,9 @@ flowchart TB
     FastAPI["FastAPI Gateway (Auth, Webhooks, RBAC, Metering)"]
   end
 
-  subgraph runtime [Durable Execution - Python and Temporal]
+  subgraph runtime [Durable Execution - Python, Temporal, and LangChain]
     TemporalEngine["Temporal Workflows and Schedules"]
-    AgentRuntime["Agent Runtime (Planner, Citations, Budgets)"]
+    AgentRuntime["Agent Runtime (LangChain LCEL, ZDR Models, Citations, Budgets)"]
     PolicyGate["Policy and Approval Gate"]
     SandboxExec["Isolated Sandbox (PDF, CSV, Charts, Code)"]
   end
@@ -84,15 +84,15 @@ flowchart TB
 
 ### C. Hybrid Connector & Action Strategy
 
-Unified behind one Python `ToolRegistry` (`packages/connectors`):
+Unified behind one Python `ToolRegistry` (`packages/connectors`), exposed to the agent runtime via LangChain `StructuredTool` adapters (`packages/agent/src/ceo_agent/tools.py`) that preserve each tool's risk tier:
 
 - **Tier 1 - Native First-Party Connectors**: Slack, Google Workspace (Drive, Gmail, Calendar), Notion, Linear, HubSpot — owning incremental webhooks, folder/channel ACL mirrors, and low-latency reads.
 - **Tier 2 - Managed Aggregator / MCP Gateway**: Composio / Nango / Pipedream Connect plus customer-supplied remote MCP servers for long-tail SaaS actions and OAuth refresh.
 - **Token Security**: Envelope encryption (AWS KMS / GCP KMS) with per-tenant DEKs for all stored OAuth credentials.
 
-### D. Durable Agent Runtime, Approvals & Standing Responsibilities
+### D. Durable Agent Runtime (Temporal + LangChain), Approvals & Standing Responsibilities
 
-Backed by **Temporal** (Python SDK), split across `agent-queue`, `sync-queue`, and `jobs-queue`:
+Backed by **Temporal** (Python SDK) for durable orchestration across `agent-queue`, `sync-queue`, and `jobs-queue`, with **LangChain** (`packages/agent`) executing LLM reasoning, prompt composition, structured citations, and tool-call planning strictly inside Temporal **activities** (never inside deterministic workflow code):
 
 ```mermaid
 sequenceDiagram
@@ -100,13 +100,16 @@ sequenceDiagram
   participant API as FastAPI Gateway
   participant WF as Temporal Agent Workflow
   participant Brain as Company Brain
+  participant LC as LangChain Runtime Activity
   participant Tool as External Tool API
 
   User->>API: Mentions bot in thread
   API->>WF: Start or signal AgentRunWorkflow
   WF->>Brain: ACL-filtered hybrid retrieval + living memory
   Brain-->>WF: Grounded context with source IDs and timestamps
-  WF->>WF: Plan steps and classify tool risk
+  WF->>LC: Run LangChain planner (ZDR BaseChatModel + LCEL)
+  LC-->>WF: Proposed tool call(s) or structured cited answer
+  WF->>WF: Classify tool risk via Policy Gate
   alt Action is read-only
     WF->>Tool: Execute read tool
     Tool-->>WF: Return data
@@ -122,6 +125,7 @@ sequenceDiagram
   API->>User: Reply in Slack thread with citations
 ```
 
+- **LangChain Orchestration Boundary (`packages/agent`)**: Uses ZDR-configured LangChain `BaseChatModel` adapters (`ChatAnthropic` / `ChatOpenAI` from `ceo_agent.llm.client`), versioned `ChatPromptTemplate`s, an ACL-scoped `BaseRetriever` wrapping `ceo_brain`, `StructuredTool` adapters over `ToolRegistry`, and an `AsyncCallbackHandler` emitting `usage_events` and OpenTelemetry traces (with external LangSmith tracing disabled for ZDR). LangChain proposes tool calls rather than executing write/external side effects autonomously, keeping Temporal durability and approval enforcement intact.
 - **Risk Policy Engine**: Tools declare risk tiers (`read`, `draft`, `write_internal`, `write_external`). Tenants configure auto-approve vs. human-approval rules in `workspace_policies`.
 - **Human-in-the-Loop via Temporal Signals**: Pending approvals persist cleanly in workflow state and resume via signals from Slack Block Kit actions or the Web Console approval queue, with timeout/expiry.
 - **Standing Responsibilities**: Temporal Schedules with natural-language brief, cadence, target channel, human owner, connected sources, and persisted `last_run_state`.
@@ -129,7 +133,7 @@ sequenceDiagram
 
 ### E. Citations, Uncertainty & Anti-Hallucination
 
-- **Mandatory Provenance**: Structured outputs bind factual claims to `chunk_id` / `memory_id`; render clickable source links + "last updated" timestamps.
+- **Mandatory Provenance**: LangChain `with_structured_output()` Pydantic schemas bind factual claims to `chunk_id` / `memory_id`; render clickable source links + "last updated" timestamps.
 - **Conflict & Uncertainty Protocol**: When sources disagree or confidence is low, surface both sources with dates, ask the human owner to clarify, and offer a one-click "Save decision to Company Brain" action.
 
 ## 3. Multi-Tenant Data Model (PostgreSQL + RLS on `tenant_id`)
@@ -143,7 +147,7 @@ sequenceDiagram
 
 ## 4. Security, Compliance & Evaluation Plan
 
-- **Tenant Isolation**: PostgreSQL RLS enforced on every connection via `SET LOCAL app.tenant_id`, tenant-prefixed S3/KMS keys, zero-data-retention LLM API contracts.
+- **Tenant Isolation**: PostgreSQL RLS enforced on every connection via `SET LOCAL app.tenant_id`, tenant-prefixed S3/KMS keys, zero-data-retention LLM API contracts (via ZDR-configured LangChain chat models with external LangSmith tracing disabled).
 - **Compliance Milestones**:
   - Month 1–2: Slack App Directory review (granular scopes, OAuth v2, event signature verification).
   - Month 3–4: Google Workspace CASA Tier 2 assessment (restricted Gmail/Drive scopes).
@@ -156,7 +160,7 @@ sequenceDiagram
 ## 5. Phased Execution Roadmap
 
 - **Phase 0 - Design Partner & Wedge (Week 1)**: Pick 1 high-frequency recurring workflow (e.g., *Founder/Ops Weekly Operating Brief* or *Sales Account Research & Follow-up*) with 3–5 design partner teams.
-- **Phase 1 - Foundation & Core Brain MVP (Weeks 2–5)**: Scaffold monorepo (`apps/{api,workers,web}`, `packages/{core,brain,surfaces/slack,connectors/native/{slack,google_workspace,notion},agent}`, `evals/suites/acl_leaks`, `infra/docker`), Postgres + pgvector + RLS, Slack multiplayer bot, identity resolution, and 3 native connectors with ACL-filtered hybrid retrieval and cited answers.
+- **Phase 1 - Foundation & Core Brain MVP (Weeks 2–5)**: Scaffold monorepo (`apps/{api,workers,web}`, `packages/{core,brain,surfaces/slack,connectors/native/{slack,google_workspace,notion},agent}`, `evals/suites/acl_leaks`, `infra/docker`), Postgres + pgvector + RLS, Slack multiplayer bot, identity resolution, LangChain-backed bounded agent runtime inside Temporal activities, and 3 native connectors with ACL-filtered hybrid retrieval and cited answers.
 - **Phase 2 - Living Memory, Actions & Approvals (Weeks 6–9)**: Teachable workspace memory (`memories` + Slack learning + Web Console editor), Temporal Policy Gate + Slack Block Kit approval cards, and managed connector gateway (Composio/Nango).
 - **Phase 3 - Standing Responsibilities, Deliverables & Billing (Weeks 10–13)**: Temporal-scheduled Standing Jobs with cross-run episodic state, E2B/Modal sandbox artifact generation, Run Inspector audit UI, and Stripe usage-based metering with budget caps.
 - **Phase 4 - Scale & Enterprise Trust (Months 4–6)**: WhatsApp Business surface, Entity Graph enrichment, Linear/HubSpot native connectors, Slack Marketplace, Google CASA Tier 2, SOC 2 Type I.

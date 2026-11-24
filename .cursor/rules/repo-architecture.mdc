@@ -28,6 +28,7 @@ apps/{api,workers} -> packages/agent -> packages/{brain,connectors,sandbox,surfa
 
 - **Webhooks (`apps/api/src/ceo_api/webhooks/`)**: Verify signatures, acknowledge fast, debounce via Redis if needed, and dispatch durable work to Temporal — never run LLM calls or sync loops inside HTTP handlers.
 - **Temporal Queues (`apps/workers`)**: Keep interactive `agent-queue`, bulk `sync-queue`, and scheduled `jobs-queue` isolated so backfills never block live Slack replies.
+- **LangChain Boundary (`packages/agent`)**: Keep all LangChain orchestration (LCEL runnables, ZDR `BaseChatModel` factories, ACL-scoped `BaseRetriever`, `StructuredTool` adapters, `ChatPromptTemplate`s, and `AsyncCallbackHandler` metering) inside `packages/agent` and invoke it only from Temporal `activities/` — preserving both the acyclic dependency graph and deterministic workflows.
 - **API Types**: Treat FastAPI OpenAPI output as the single source of truth; generate TypeScript types into `apps/web/src/lib/api-client/` rather than hand-maintaining duplicate DTOs.
 
 ## Phased Build Discipline
