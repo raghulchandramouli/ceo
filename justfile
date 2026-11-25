@@ -23,8 +23,9 @@ eval:
     uv run python evals/runner.py
 
 # Regenerate the web API client from the OpenAPI schema.
-codegen:
-    uv run python scripts/codegen.py
+# `just codegen --check` fails when the committed client has drifted.
+codegen *args:
+    uv run python scripts/codegen.py {{args}}
 
 # Check formatting, types, package boundaries, and the web app.
 lint:

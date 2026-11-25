@@ -15,6 +15,20 @@ concurrency:
 jobs:
   python:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: ceo
+          POSTGRES_PASSWORD: ceo
+          POSTGRES_DB: ceo
+        ports:
+          - "5432:5432"
+        options: >-
+          --health-cmd "pg_isready -h localhost -U ceo -d ceo"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v5
@@ -27,7 +41,14 @@ jobs:
       - run: uv run pyright
       - run: uv run lint-imports
       - run: uv run pytest
-      - run: uv run python scripts/codegen.py --check
+        env:
+          DATABASE_URL: postgresql+asyncpg://ceo:ceo@localhost:5432/ceo
+          CEO_APP_DATABASE_URL: postgresql+asyncpg://ceo_app:ceo_app@localhost:5432/ceo
+      - name: OpenAPI client drift
+        run: |
+          curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to "$HOME/.local/bin"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          just codegen --check
 
   web:
     runs-on: ubuntu-latest

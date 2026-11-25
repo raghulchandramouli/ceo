@@ -1,0 +1,13 @@
+{
+  "id": "private-in-public-channel",
+  "document": {
+    "tenant_id": "tenant-a",
+    "principals": ["user:ceo"]
+  },
+  "query": {
+    "tenant_id": "tenant-a",
+    "user_principals": ["user:ceo"],
+    "channel_principals": ["user:ceo", "user:eng"]
+  },
+  "expect_visible": false
+}

@@ -1,0 +1,13 @@
+{
+  "id": "cross-tenant",
+  "document": {
+    "tenant_id": "tenant-b",
+    "principals": ["user:bob"]
+  },
+  "query": {
+    "tenant_id": "tenant-a",
+    "user_principals": ["user:bob"],
+    "channel_principals": null
+  },
+  "expect_visible": false
+}

@@ -22,4 +22,5 @@ jobs:
           python-version: "3.12"
           enable-cache: true
       - run: uv sync --frozen --all-packages
-      - run: uv run python evals/runner.py
+      - name: ACL leak hard gate
+        run: uv run python evals/runner.py

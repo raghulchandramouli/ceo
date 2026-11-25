@@ -3,11 +3,20 @@ name = "ceo-agent"
 version = "0.0.0"
 description = "Bounded agent runtime and model routing."
 requires-python = ">=3.12"
-dependencies = ["ceo-brain", "ceo-connectors", "ceo-surfaces"]
+dependencies = [
+    "ceo-brain",
+    "ceo-connectors",
+    "ceo-core",
+    "ceo-surfaces",
+    "langchain-anthropic>=0.3",
+    "langchain-core>=0.3",
+    "langchain-openai>=0.3",
+]
 
 [tool.uv.sources]
 ceo-brain = { workspace = true }
 ceo-connectors = { workspace = true }
+ceo-core = { workspace = true }
 ceo-surfaces = { workspace = true }
 
 [build-system]

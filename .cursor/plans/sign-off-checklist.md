@@ -13,12 +13,12 @@ Check off each item (`- [x]`) only after code is merged and verified. Complete t
 ## Cross-Cutting Invariants (Continuous Gate Across All Phases)
 
 - [x] Acyclic package dependency graph enforced (`apps/{api,workers} -> packages/agent -> packages/{brain,connectors,sandbox,surfaces} -> packages/core`; `packages/` never imports `apps/`)
-- [ ] Every tenant-owned PostgreSQL table carries `tenant_id` with Row-Level Security (RLS) policies in Alembic migrations
-- [ ] All DB queries execute inside `tenant_session(tenant_id)` (`SET LOCAL app.tenant_id = :tenant_id`)
-- [ ] All third-party OAuth tokens encrypted via KMS envelope encryption (`ceo_core.security.kms`) with per-tenant DEKs; zero plaintext token logs
-- [ ] All LLM traffic routed exclusively through ZDR-configured LangChain `BaseChatModel` instances from `ceo_agent.llm.client` (with external LangSmith tracing disabled and `ceo_agent.callbacks` metering attached)
-- [ ] FastAPI OpenAPI schema and generated TypeScript client (`apps/web/src/lib/api-client/`) pass CI drift check (`just codegen`)
-- [ ] `evals/suites/acl_leaks/` passes CI with **0% leaks** (hard merge gate)
+- [x] Every tenant-owned PostgreSQL table carries `tenant_id` with Row-Level Security (RLS) policies in Alembic migrations
+- [x] All DB queries execute inside `tenant_session(tenant_id)` (`SET LOCAL app.tenant_id = :tenant_id`)
+- [x] All third-party OAuth tokens encrypted via KMS envelope encryption (`ceo_core.security.kms`) with per-tenant DEKs; zero plaintext token logs
+- [x] All LLM traffic routed exclusively through ZDR-configured LangChain `BaseChatModel` instances from `ceo_agent.llm.client` (with external LangSmith tracing disabled and `ceo_agent.callbacks` metering attached)
+- [x] FastAPI OpenAPI schema and generated TypeScript client (`apps/web/src/lib/api-client/`) pass CI drift check (`just codegen`)
+- [x] `evals/suites/acl_leaks/` passes CI with **0% leaks** (hard merge gate)
 
 ---
 

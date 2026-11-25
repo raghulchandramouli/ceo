@@ -1,0 +1,13 @@
+{
+  "id": "visible-dm",
+  "document": {
+    "tenant_id": "tenant-a",
+    "principals": ["user:alice"]
+  },
+  "query": {
+    "tenant_id": "tenant-a",
+    "user_principals": ["user:alice"],
+    "channel_principals": null
+  },
+  "expect_visible": true
+}
